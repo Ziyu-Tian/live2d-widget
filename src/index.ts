@@ -41,6 +41,7 @@ function loadWidget(config: Config) {
       }
     }
   })();
+  
 
   function welcomeMessage(time: Time) {
     if (location.pathname === '/') {
