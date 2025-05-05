@@ -7,27 +7,26 @@
 ![](https://forthebadge.com/images/badges/powered-by-electricity.svg)
 ![](https://forthebadge.com/images/badges/makes-people-smile.svg)
 
-[English](README.en.md)
+## 特性 Feature
 
-## 特性
+在网页中添加 Live2D 看板娘。兼容 PJAX，支持无刷新加载。  
+Add Live2D widget to web page. Compatible with PJAX.
 
-在网页中添加 Live2D 看板娘。兼容 PJAX，支持无刷新加载。
-
-<img src="demo/screenshots/screenshot-2.png" width="280"><img src="demo/screenshots/screenshot-3.png" width="280"><img src="demo/screenshots/screenshot-1.png" width="270">
+<img src="assets/screenshot-2.png" width="280"><img src="assets/screenshot-3.png" width="280"><img src="assets/screenshot-1.png" width="270">
 
 （注：以上人物模型仅供展示之用，本仓库并不包含任何模型。）
 
 你也可以查看示例网页：
 
 - 在 [米米的博客](https://zhangshuqiao.org) 的左下角可查看效果
-- [demo/demo.html](https://live2d-widget.pages.dev/demo/demo)，展现基础功能
-- [demo/login.html](https://live2d-widget.pages.dev/demo/login)，仿 NPM 的登陆界面
+- [demo.html](https://mi.js.org/live2d-widget/demo/demo.html)，展现基础功能
+- [login.html](https://mi.js.org/live2d-widget/demo/login.html)，仿 NPM 的登陆界面
 
-## 使用
+## 使用 Usage
 
 如果你是小白，或者只需要最基础的功能，那么只用将这一行代码加入 html 页面的 `head` 或 `body` 中，即可加载看板娘：
 ```xml
-<script src="https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js"></script>
+<script src="https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
 ```
 添加代码的位置取决于你的网站的构建方式。例如，如果你使用的是 [Hexo](https://hexo.io)，那么需要在主题的模版文件中添加以上代码。对于用各种模版引擎生成的页面，修改方法类似。  
 如果网站启用了 PJAX，由于看板娘不必每页刷新，需要注意将该脚本放到 PJAX 刷新区域之外。
@@ -35,30 +34,27 @@
 **但是！我们强烈推荐自己进行配置，让看板娘更加适合你的网站！**  
 如果你有兴趣自己折腾的话，请看下面的详细说明。
 
-## 配置
+## 配置 Configuration
 
-你可以对照 `dist/autoload.js` 的源码查看可选的配置项目。`autoload.js` 会自动加载三个文件：`waifu.css`，`live2d.min.js` 和 `waifu-tips.js`。`waifu-tips.js` 会创建 `initWidget` 函数，这就是加载看板娘的主函数。`initWidget` 函数接收一个 Object 类型的参数，作为看板娘的配置。以下是配置选项：
+你可以对照 `autoload.js` 的源码查看可选的配置项目。`autoload.js` 会自动加载三个文件：`waifu.css`，`live2d.min.js` 和 `waifu-tips.js`。`waifu-tips.js` 会创建 `initWidget` 函数，这就是加载看板娘的主函数。`initWidget` 函数接收一个 Object 类型的参数，作为看板娘的配置。以下是配置选项：
 
 | 选项 | 类型 | 默认值 | 说明 |
 | - | - | - | - |
-| `waifuPath` | `string` | `https://fastly.jsdelivr.net/npm/live2d-widgets@0/waifu-tips.json` | 看板娘资源路径，可自行修改 |
+| `waifuPath` | `string` | `https://fastly.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/waifu-tips.json` | 看板娘资源路径，可自行修改 |
 | `apiPath` | `string` | `https://live2d.fghrsh.net/api/` | API 路径，可选参数 |
 | `cdnPath` | `string` | `https://fastly.jsdelivr.net/gh/fghrsh/live2d_api/` | CDN 路径，可选参数 |
 | `tools` | `string[]` | 见 `autoload.js` | 加载的小工具按钮，可选参数 |
 
 其中，`apiPath` 和 `cdnPath` 两个参数设置其中一项即可。`apiPath` 是后端 API 的 URL，可以自行搭建，并增加模型（需要修改的内容比较多，此处不再赘述），可以参考 [live2d_api](https://github.com/fghrsh/live2d_api)。而 `cdnPath` 则是通过 jsDelivr 这样的 CDN 服务加载资源，更加稳定。
 
-## 自定义
+## 自定义 Customization
 
 如果以上「配置」部分提供的选项还不足以满足你的需求，那么你可以自己进行修改。本仓库的目录结构如下：
 
-- `src/` 目录下包含了各个组件的代码，例如按钮和对话框等；
-- `build/` 目录下包含了 TypeScript 构建后的文件；
-- `dist/` 目录下包含了进一步打包后网页直接可用的文件，其中：
-  - `autoload.js` 是用于自动加载其它资源，例如样式表等；
-  - `waifu-tips.js` 是由 `build/waifu-tips.js` 自动打包生成的，不建议直接修改；
-  - `waifu-tips.json` 中定义了触发条件（`selector`，CSS 选择器）和触发时显示的文字（`text`）；
-  - `waifu.css` 是看板娘的样式表。
+- `src/waifu-tips.js` 包含了按钮和对话框的逻辑；
+- `waifu-tips.js` 是由 `src/waifu-tips.js` 自动打包生成的，不建议直接修改；
+- `waifu-tips.json` 中定义了触发条件（`selector`，CSS 选择器）和触发时显示的文字（`text`）；
+- `waifu.css` 是看板娘的样式表。
 
 `waifu-tips.json` 中默认的 CSS 选择器规则是对 Hexo 的 [NexT 主题](http://github.com/next-theme/hexo-theme-next) 有效的，为了适用于你自己的网页，可能需要自行修改，或增加新内容。  
 **警告：`waifu-tips.json` 中的内容可能不适合所有年龄段，或不宜在工作期间访问。在使用时，请自行确保它们是合适的。**
@@ -73,11 +69,11 @@ npm run build
 
 如果有任何疑问，欢迎提 Issue。如果有任何修改建议，欢迎提 Pull Request。
 
-## 部署
+## 部署 Deploy
 
 在本地完成了修改后，你可以将修改后的项目部署在服务器上，或者通过 CDN 加载，以便在网页中使用。
 
-### 使用 CDN
+### Using CDN
 
 要自定义有关内容，可以把这个仓库 Fork 一份，然后把修改后的内容通过 git push 到你的仓库中。这时，使用方法对应地变为
 ```xml
@@ -111,7 +107,7 @@ https://example.com/path/to/live2d-widget/
 ```
 就可以加载了。
 
-## 鸣谢
+## 鸣谢 Thanks
 
 <a href="https://www.browserstack.com/">
   <picture>
@@ -142,7 +138,7 @@ https://www.fghrsh.net/post/123.html
 
 点击看板娘的纸飞机按钮时，会出现一个彩蛋，这来自于 [WebsiteAsteroids](http://www.websiteasteroids.com)。
 
-## 更多
+## 更多 More
 
 更多内容可以参考：  
 https://nocilol.me/archives/lab/add-dynamic-poster-girl-with-live2d-to-your-blog-02  
@@ -162,7 +158,7 @@ https://github.com/LikeNeko/L2dPetForMac
 以及 Wallpaper Engine：  
 https://github.com/guansss/nep-live2d
 
-## 许可证
+## 许可证 License
 
 Released under the GNU General Public License v3  
 http://www.gnu.org/licenses/gpl-3.0.html
@@ -182,7 +178,7 @@ http://www.live2d.com/eula/live2d-open-software-license-agreement_en.html
 
 https://community.live2d.com/discussion/140/webgl-developer-licence-and-javascript-question
 
-## 更新日志
+## 更新 Update
 
 2018年10月31日，由 fghrsh 提供的原 API 停用，请更新至新地址。参考文章：  
 https://www.fghrsh.net/post/170.html
